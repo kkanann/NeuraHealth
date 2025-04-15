@@ -1,13 +1,19 @@
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
+require('dotenv').config();
+
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
-require('dotenv').config();
-
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
+
+app.get('/', (req, res) => {
+  res.send('NeuraHealth API is running 🚀');
+});
 
 app.post('/chat', async (req, res) => {
   const { message } = req.body;
@@ -23,8 +29,6 @@ app.post('/chat', async (req, res) => {
       },
       {
         headers: {
-          Authorization: `Bearer JyL8mQSODD8hbvfRZQl860sUWbjlfIfYglrzV5JD`,
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${GROQ_API_KEY}`,
           'Content-Type': 'application/json',
         },
@@ -38,18 +42,6 @@ app.post('/chat', async (req, res) => {
     res.status(500).json({ error: 'Failed to connect to Cohere' });
   }
 });
-
-
-const express = require('express');
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-// Add this route
-app.get('/', (req, res) => {
-  res.send('NeuraHealth API is running 🚀');
-});
-
-// Your other routes go below
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
