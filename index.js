@@ -2,7 +2,6 @@ const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
 
-const app = express();
 app.use(cors());
 app.use(express.json());
 
@@ -40,7 +39,18 @@ app.post('/chat', async (req, res) => {
   }
 });
 
+
+const express = require('express');
+const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Add this route
+app.get('/', (req, res) => {
+  res.send('NeuraHealth API is running 🚀');
+});
+
+// Your other routes go below
+
 app.listen(PORT, () => {
-  app.listen(PORT, () => console.log(`Chatbot server running on port ${PORT}`));
+  console.log(`Server listening on port ${PORT}`);
 });
